@@ -36,6 +36,8 @@
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 
+#import "CCDirectorIOS.h"
+
 @implementation CCParticleSystemPoint
 
 -(id) initWithTotalParticles:(int) numberOfParticles
@@ -81,7 +83,7 @@
 	
 	// place vertices and colos in array
 	vertices[particleIdx].pos = pos;
-	vertices[particleIdx].size = p->size;
+	vertices[particleIdx].size = p->size * [[CCDirector sharedDirector] contentScaleFactor]; //this will probably make things a bit slow
 	vertices[particleIdx].colors = p->color;
 }
 

@@ -115,9 +115,13 @@
 	ccglBindFramebuffer(CC_GL_FRAMEBUFFER, oldFBO_);
 	// Restore the original matrix and viewport
 	glPopMatrix();
-	CGSize size = [[CCDirector sharedDirector] displaySize];
-	glViewport(0, 0, size.width, size.height);
-
+	//CGSize size = [[CCDirector sharedDirector] displaySize];
+	//glViewport(0, 0, size.width, size.height);
+	
+	//This is instead of [[CCDirector sharedDirector] recalculateProjectionAndEAGLViewSize]
+	//because that method doesn't seem to exist anymore
+	[[CCDirector sharedDirector] setGLDefaultValues];
+	 
 	glColorMask(TRUE, TRUE, TRUE, TRUE);
 }
 

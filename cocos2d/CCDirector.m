@@ -246,6 +246,7 @@ static CCDirector *_sharedDirector = nil;
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
 			ccglOrtho(0, size.width, 0, size.height, -1024, 1024);
+			glScalef([self contentScaleFactor], [self contentScaleFactor], 0);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();			
 			break;

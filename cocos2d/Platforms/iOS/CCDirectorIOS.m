@@ -441,16 +441,14 @@
 			break;
 	}
 	
-	if( contentScaleFactor_ != 1 && isContentScaleSupported_ )
-		ret = ccpMult(ret, contentScaleFactor_);
 	return ret;
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	CGSize winSize = surfaceSize_;
-	int oppositeX = winSize.width - glPoint.x;
-	int oppositeY = winSize.height - glPoint.y;
+	CGSize surfaceSize = surfaceSize_;
+	int oppositeX = surfaceSize.width - glPoint.x;
+	int oppositeY = surfaceSize.height - glPoint.y;
 	CGPoint uiPoint = CGPointZero;
 	switch ( deviceOrientation_) {
 		case CCDeviceOrientationPortrait:
@@ -464,7 +462,7 @@
 			break;
 		case CCDeviceOrientationLandscapeRight:
 			// Can't use oppositeX/Y because x/y are flipped
-			uiPoint = ccp(winSize.width-glPoint.y, winSize.height-glPoint.x);
+			uiPoint = ccp(surfaceSize.width-glPoint.y, surfaceSize.height-glPoint.x);
 			break;
 	}
 	
@@ -475,7 +473,7 @@
 // get the current size of the glview
 -(CGSize)winSize
 {
-	CGSize s = surfaceSize_;
+	CGSize s = screenSize_;
 	
 	if( deviceOrientation_ == CCDeviceOrientationLandscapeLeft || deviceOrientation_ == CCDeviceOrientationLandscapeRight ) {
 		// swap x,y in landscape mode

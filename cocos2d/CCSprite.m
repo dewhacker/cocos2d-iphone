@@ -25,6 +25,8 @@
 
 #import <Availability.h>
 
+#import "CCDirectorIOS.h"
+
 #import "ccConfig.h"
 #import "CCSpriteBatchNode.h"
 #import "CCSpriteSheet.h"
@@ -202,7 +204,16 @@ struct transformValues_ {
 	NSAssert(texture!=nil, @"Invalid texture for sprite");
 
 	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
+	
+	if([[CCDirector sharedDirector] contentScaleFactor] == 2)
+	{
+		rect.size = CGSizeMake(texture.contentSize.width/2, texture.contentSize.height/2);
+	}
+	else
+	{
+		rect.size = texture.contentSize;
+	}
+	
 	return [self initWithTexture:texture rect:rect];
 }
 
@@ -211,9 +222,19 @@ struct transformValues_ {
 	NSAssert(filename!=nil, @"Invalid filename for sprite");
 
 	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
-	if( texture ) {
+	if( texture ) 
+	{
 		CGRect rect = CGRectZero;
-		rect.size = texture.contentSize;
+		
+		if([[CCDirector sharedDirector] contentScaleFactor] == 2)
+		{
+			rect.size = CGSizeMake(texture.contentSize.width/2, texture.contentSize.height/2);
+		}
+		else
+		{
+			rect.size = texture.contentSize;
+		}
+		
 		return [self initWithTexture:texture rect:rect];
 	}
 
@@ -355,7 +376,17 @@ struct transformValues_ {
 	rectRotated_ = rotated;
 
 	[self setContentSize:untrimmedSize];
-	[self updateTextureCoords:rect];
+	
+	if([[CCDirector sharedDirector] contentScaleFactor] == 2)
+	{
+		CGRect doubleRect = CGRectMake(rect.origin.x*2,rect.origin.y*2,rect.size.width*2,rect.size.height*2);
+		[self updateTextureCoords:doubleRect];
+	}
+	else
+	{
+		[self updateTextureCoords:rect];
+	}
+	
 
 	CGPoint relativeOffset = unflippedOffsetPositionFromCenter_;
 	
