@@ -515,7 +515,7 @@
 
 -(void) applyOrientation
 {	
-	CGSize s = surfaceSize_;
+	CGSize s = screenSize_;
 	float w = s.width / 2;
 	float h = s.height / 2;
 	
